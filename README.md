@@ -8,6 +8,7 @@ Avant de commencer à compiler il faut telecharger la librairie SDL2 utilisée p
 Site officiel : http://libsdl.org/
 
 
+
 Liste des commandes à faire :
 
     make                                      # pour compiler
