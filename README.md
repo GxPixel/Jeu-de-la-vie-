@@ -1,6 +1,9 @@
 # Jeu-de-la-vie
 Projet S2 Pre-Ing 1 Cy-Tech
 
+Avant de commencer à compiler il faut telecharger la librairie SDL2 utilisée pour l'affichage graphique, utilisé la comande :
+    sudo apt-get install libsdl2-dev
+Site officiel : http://libsdl.org/
 
 Liste des commandes à faire :
 
