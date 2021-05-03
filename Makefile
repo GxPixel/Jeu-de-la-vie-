@@ -1,12 +1,13 @@
 EXEC = exe
 
 CC = gcc
-CFLAGS = -Wall -Wextra
-#LDFlags =
+CFLAGS = -Wall -Wextra `sdl2-config --cflags`
+LDFlags = `sdl2-config --libs` 
 
 #ensemble des .c
 SRC = main.c \
 	fonctions.c \
+	affichage.c \
 
 #ensemble des .o
 OBJ = $(addprefix obj/,$(SRC:.c=.o))	
@@ -21,7 +22,7 @@ obj/ :
 #créer l'executable avec l'ensemble des .o
 # $@ = la cible ; $^ l'ensemble des composants
 $(EXEC) : $(OBJ)            
-	$(CC) $^ -o $@           
+	$(CC) $^ -o $@ $(LDFlags)
 
 #créer les .o à partir du .c
 # % = remplace le nom du fichier pour éviter des redondances dans le makefile

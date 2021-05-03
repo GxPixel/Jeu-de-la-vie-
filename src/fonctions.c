@@ -97,5 +97,5 @@ int tour(int** tab,int lignes,int colones,int torique){
 
 	tab = t_temp;   // le tableau prend ses nouvelles valeurs
 
-	liberer(t_temp,linges);   // liberation tableau temporaire
+	liberer(t_temp,lignes);   // liberation tableau temporaire
 }
