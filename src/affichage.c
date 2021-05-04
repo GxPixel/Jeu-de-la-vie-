@@ -41,4 +41,15 @@ void afficher_tableau(SDL_Renderer** p_renderer , int taille, int** tab, int nb_
 	}
 }
 	
+void effacer_ecran(SDL_Renderer** p_renderer , int taille){
+	if(SDL_SetRenderDrawColor(*p_renderer,0,0,0,SDL_ALPHA_OPAQUE) !=0){SDL_ExitWithError("Impossible de changer couleur");}
+	SDL_Rect rectangle;
+	rectangle.x = 0;
+	rectangle.y = 0;
+	rectangle.w = taille;
+	rectangle.h = taille;
+				
+	if(SDL_RenderFillRect(*p_renderer,&rectangle)!=0){SDL_ExitWithError("imposible de dessiner un rectangle");}
+	
+}
 	
