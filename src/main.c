@@ -32,20 +32,19 @@ int main(int argc, char** argv){
 	init(tab,nb_ligne,nb_colone);       // initialisation tableau
 	
 	
-	afficher_tableau(&renderer,N,tab,nb_ligne,nb_colone);
-	/*
+	
 	scanf("%d",&nb_iteration);
 	scanf("%d",&torique);
 	
 
-	afficher(tab,nb_ligne,nb_colone);
-
-
-	printf("%d\n",verifCasesAdjacentes(tab,1,1,torique));		//Test de la fonction verifCasesAdjacantes
-	*/
+	for(int i =1;i<=nb_iteration;i++){
+		effacer_ecran(&renderer,N);
+		afficher_tableau(&renderer,N,tab,nb_ligne,nb_colone);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(200);
+		tour(&tab,nb_ligne,nb_colone,torique);
+	}
 	
-	SDL_RenderPresent(renderer);
-	SDL_Delay(10000);
 	
 	liberer(tab,nb_ligne);   // liberation memoire du tableau
 	

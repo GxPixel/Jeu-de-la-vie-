@@ -2,43 +2,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int** alloc(int lignes, int colones){
+int** alloc(int nb_ligne, int nb_colone){
 	int** tab;
 	
-	tab = malloc(lignes * sizeof(int*));
-	for(int i =0;i<lignes;i++){
-		tab[i] = malloc(colones * sizeof(int));
+	tab = malloc(nb_ligne * sizeof(int*));
+	for(int i =0;i<nb_ligne;i++){
+		tab[i] = malloc(nb_colone * sizeof(int));
 	}
 	
 	return tab;
 }
 
-void init(int** tab, int lignes, int colones){
-	for(int i=0;i<lignes;i++){
-		for(int j=0;j<colones;j++){
+void init(int** tab, int nb_ligne, int nb_colone){
+	for(int i=0;i<nb_ligne;i++){
+		for(int j=0;j<nb_colone;j++){
 			scanf("%d",&tab[i][j]);
 		}
 	}
 }
 
-void liberer(int** tab, int lignes){
-	for(int i =0;i<lignes;i++){
+void liberer(int** tab, int nb_ligne){
+	for(int i =0;i<nb_ligne;i++){
 			free(tab[i]);
 		}
 	free(tab);	
 }
 
-void afficher(int** tab, int lignes, int colones){
-	    for(int i=0; i<lignes; i++){
+void afficher(int** tab, int nb_ligne, int nb_colone){
+	    for(int i=0; i<nb_ligne; i++){
 			printf("+");			
-			for(int x=0; x<colones; x++){
+			for(int k=0; k<nb_colone; k++){
 				printf("---+");
 			}
 		    	printf("\n");			
-			for(int j=0; j<colones; j++){				
+			for(int j=0; j<nb_colone; j++){				
 				printf("|");
 				if (tab[i][j] == 1){
-					printf(" O ");
+					printf(" 0 ");
 				}				
 				else{
 					printf("   ");
@@ -47,24 +47,74 @@ void afficher(int** tab, int lignes, int colones){
 			printf("|\n");
 		}
 		printf("+");			
-		for(int x=0; x<colones; x++){
+		for(int k=0; k<nb_colone; k++){
 			printf("---+");
 		}
 		printf("\n");
 }
 
-int verifCasesAdjacentes(int** tab, int x, int y, int torique){
+int verifCasesAdjacentes(int** tab, int nb_ligne, int nb_colone, int ligne, int colone, int torique){
 	int nbCasesAdjPleines = 0;
 	if (torique){
-
+		if (ligne == 0 && colone == 0) nbCasesAdjPleines = tab[0][0] + tab[0][1] +	tab[1][0] +	tab[1][1] +	tab[0][nb_colone-1] + tab[1][nb_colone-1] +	tab[nb_ligne-1][0] + tab[nb_ligne-1][1] + tab[nb_ligne-1][nb_colone-1];		
+		else{
+			if (ligne == nb_ligne-1 && colone == 0)	nbCasesAdjPleines = tab[nb_ligne-1][1] + tab[nb_ligne-2][0] + tab[nb_ligne-2][1] + tab[nb_ligne-1][nb_colone-1] + tab[nb_ligne-2][nb_colone-1] + tab[0][0] + tab[0][1] + tab[0][nb_colone-1];											
+			else{
+				if (ligne == 0 && colone == nb_colone-1) nbCasesAdjPleines = tab[0][nb_colone-2] + tab[1][nb_colone-2] + tab[1][nb_colone-1] + tab[nb_ligne-1][nb_colone-1] + tab[nb_ligne-1][nb_colone-2] + tab[0][0] + tab[1][0] + tab[nb_ligne-1][0];													
+				else{
+					if (ligne == nb_ligne-1 && colone == nb_colone-1) nbCasesAdjPleines = tab[0][0] + tab[nb_ligne-1][nb_colone-2] + tab[nb_ligne-2][nb_colone-2] + tab[nb_ligne-2][nb_colone-1] + tab[0][nb_colone-1] + tab[0][nb_ligne-2] + tab[nb_ligne-1][0] + tab[nb_ligne-2][0]; 							
+					else{
+						if (ligne == 0)	nbCasesAdjPleines = tab[nb_ligne-1][colone-1] + tab[ligne][colone-1] + tab[ligne+1][colone-1] + tab[nb_ligne-1][colone] + tab[ligne+1][colone] + tab[nb_ligne-1][colone+1] + tab[ligne][colone+1] + tab[ligne+1][colone+1];														
+						else{
+							if (ligne == nb_ligne-1) nbCasesAdjPleines = tab[ligne-1][colone-1] + tab[ligne][colone-1] + tab[0][colone-1] + tab[ligne-1][colone] + tab[0][colone] + tab[ligne-1][colone+1] + tab[ligne][colone+1] + tab[0][colone+1];													
+							else{
+								if (colone == 0) nbCasesAdjPleines = tab[ligne-1][nb_colone-1] + tab[ligne][nb_colone-1] + tab[ligne+1][nb_colone-1] + tab[ligne-1][colone] + tab[ligne+1][colone] + tab[ligne-1][colone+1] + tab[ligne][colone+1] + tab[ligne+1][colone+1];													
+								else{
+									if (colone == nb_colone-1) nbCasesAdjPleines = tab[ligne-1][colone-1] + tab[ligne][colone-1] + tab[ligne+1][colone-1] + tab[ligne-1][colone] + tab[ligne+1][colone] + tab[ligne-1][0] + tab[ligne][0] + tab[ligne+1][0];										
+									else{
+										nbCasesAdjPleines = tab[ligne-1][colone-1] + tab[ligne][colone-1] + tab[ligne+1][colone-1] + tab[ligne-1][colone] + tab[ligne+1][colone] + tab[ligne-1][colone+1] + tab[ligne][colone+1] + tab[ligne+1][colone+1];	//verif pour tout le reste
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
+
 	
 	else{
-		nbCasesAdjPleines = tab[x-1][y+1] + tab[x][y+1] + tab[x+1][y+1] + tab[x-1][y] + tab[x+1][y] + tab[x-1][y-1] + tab[x][y-1] + tab[x+1][y-1];
+		if (ligne == 0 && colone == 0) nbCasesAdjPleines = tab [ligne+1][colone] + tab[ligne][colone+1] + tab[ligne+1][colone+1];																															//verif si on est en haut à gauche
+		else{
+			if (ligne == nb_ligne-1 && colone == 0) nbCasesAdjPleines = tab [ligne-1][colone] + tab[ligne][colone+1] + tab[ligne-1][colone+1];																												//verif si on est en bas à gauche
+			else{
+				if (ligne == 0 && colone == nb_colone-1) nbCasesAdjPleines = tab [ligne][colone-1] + tab[ligne+1][colone-1] + tab[ligne+1][colone];																											//verif si on est en haut à droite
+				else{
+					if (ligne == nb_ligne-1 && colone == nb_colone-1) nbCasesAdjPleines = tab [ligne-1][colone-1] + tab[ligne][colone-1] + tab[ligne-1][colone];																							//verif si on est en bas à droite
+					else{
+						if (ligne == 0) nbCasesAdjPleines =tab[ligne][colone-1] + tab[ligne+1][colone-1]+ tab[ligne+1][colone] + tab[ligne][colone+1] + tab[ligne+1][colone+1];																				//verif si la case est sur la colone du haut
+						else{
+							if (ligne == nb_ligne-1) nbCasesAdjPleines = tab[ligne-1][colone-1] + tab[ligne][colone-1] + tab[ligne-1][colone]+ tab[ligne-1][colone+1] + tab[ligne][colone+1];																//verif si la case est sur la colone du bas
+							else{
+								if (colone == 0) nbCasesAdjPleines =tab[ligne-1][colone] + tab[ligne+1][colone] + tab[ligne-1][colone+1] + tab[ligne][colone+1] + tab[ligne+1][colone+1];																	//verif si la case est sur la ligne de gauche
+								else{
+									if (colone == nb_colone-1) nbCasesAdjPleines = tab[ligne-1][colone-1] + tab[ligne][colone-1] + tab[ligne+1][colone-1] + tab[ligne-1][colone] + tab[ligne+1][colone];													//verif si la case est sur la ligne de droite
+									else{
+										nbCasesAdjPleines = tab[ligne-1][colone-1] + tab[ligne][colone-1] + tab[ligne+1][colone-1] + tab[ligne-1][colone] + tab[ligne+1][colone] + tab[ligne-1][colone+1] + tab[ligne][colone+1] + tab[ligne+1][colone+1];	//verif pour tout le reste
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	return nbCasesAdjPleines;
 }
+
 
 int nouvellevaleur(int nb_voisin,int valeur_case){
 	if(valeur_case == 0){                       // Si la case est vide au départ
@@ -73,8 +123,8 @@ int nouvellevaleur(int nb_voisin,int valeur_case){
 		}else{										// Sinon
 			return 0;									// La case reste vide
 		}
-	}else{										// Si il y a deja un cellule
-		if(nb_voisin == 3 || nb_voisin == 2){		// Si il y a 2 ou 3 voisins
+	}else{										// Si il colone a deja un cellule
+		if(nb_voisin == 3 || nb_voisin == 2){		// Si il colone a 2 ou 3 voisins
 			return 1;									// La cellule reste en vie
 		}else{									//Sinon
 			return 0;								// La cellule meurt
@@ -82,20 +132,23 @@ int nouvellevaleur(int nb_voisin,int valeur_case){
 	}
 }
 
-int tour(int** tab,int lignes,int colones,int torique){
+void tour(int*** p_tab,int nb_ligne,int nb_colone,int torique){
 	int** t_temp;
-	t_temp = alloc(lignes,colones);   //allocation du tableau temporaire
+	int** tab;
+	int nb_voisin;
+	int valeur_case;
+
+	t_temp = alloc(nb_ligne,nb_colone);   //allocation du tableau temporaire
+	tab = *p_tab;
 
 	// initialisation des valeur du tableau temporaire
-	for(int i=0;i<lignes;i++){
-		for(int j=0;j<colones;j++){
-			int nb_voisin = verifCasesAdjacentes(tab,i,j,torique);
-			int valeur_case = tab[i][j];
+	for(int i=0;i<nb_ligne;i++){
+		for(int j=0;j<nb_colone;j++){
+			nb_voisin = verifCasesAdjacentes(tab,nb_ligne,nb_colone,i,j,torique);
+			valeur_case = tab[i][j];
 			t_temp[i][j]= nouvellevaleur(nb_voisin,valeur_case);
 		}
 	}
 
-	tab = t_temp;   // le tableau prend ses nouvelles valeurs
-
-	liberer(t_temp,lignes);   // liberation tableau temporaire
+	*p_tab = t_temp;   // le tableau prend ses nouvelles valeurs
 }
