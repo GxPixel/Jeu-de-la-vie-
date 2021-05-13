@@ -14,9 +14,12 @@ int main(int argc, char** argv){
 	int torique;
 	int** tab;
 	
+	int tps_act = 0;
+	int tps_pre = 0;
+
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
-	
+	SDL_Event event;
 	
 	
 	//initialisation
@@ -36,13 +39,35 @@ int main(int argc, char** argv){
 	scanf("%d",&nb_iteration);
 	scanf("%d",&torique);
 	
+	//nb_iteration = 10000;
 
-	for(int i =1;i<=nb_iteration;i++){
-		effacer_ecran(&renderer,N);
-		afficher_tableau(&renderer,N,tab,nb_ligne,nb_colone);
-		SDL_RenderPresent(renderer);
-		SDL_Delay(200);
-		tour(&tab,nb_ligne,nb_colone,torique);
+	int i =1;
+	while(i<=nb_iteration){
+		SDL_PollEvent(&event);
+
+		switch(event.type){
+
+			case SDL_QUIT:
+				i = nb_iteration + 1;
+				break;
+
+			default :
+				tps_act = SDL_GetTicks();
+				if(tps_act - tps_pre > 200){
+					effacer_ecran(&renderer,N);
+					afficher_tableau(&renderer,N,tab,nb_ligne,nb_colone);
+					SDL_RenderPresent(renderer);
+					tour(&tab,nb_ligne,nb_colone,torique);
+					i++;
+					tps_pre = tps_act;
+				}
+				break;
+		}
+
+
+		
+
+	
 	}
 	
 	
