@@ -5,6 +5,7 @@
 #include "header.h"
 #include "affichage.h"
 
+
 #define N 600      //Taille fenetre
 
 int main(int argc, char** argv){
@@ -20,8 +21,7 @@ int main(int argc, char** argv){
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 	SDL_Event event;
-	
-	
+
 	//initialisation
 	SDL_Initialisation(&window,&renderer,N);
 	
@@ -39,7 +39,7 @@ int main(int argc, char** argv){
 	scanf("%d",&nb_iteration);
 	scanf("%d",&torique);
 	
-	//nb_iteration = 10000;
+
 
 	int i =1;
 	while(i<=nb_iteration){
