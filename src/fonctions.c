@@ -56,7 +56,7 @@ void afficher(int** tab, int nb_ligne, int nb_colone){
 int verifCasesAdjacentes(int** tab, int nb_ligne, int nb_colone, int ligne, int colone, int torique){
 	int nbCasesAdjPleines = 0;
 	if (torique){
-		if (ligne == 0 && colone == 0) nbCasesAdjPleines = tab[0][0] + tab[0][1] +	tab[1][0] +	tab[1][1] +	tab[0][nb_colone-1] + tab[1][nb_colone-1] +	tab[nb_ligne-1][0] + tab[nb_ligne-1][1] + tab[nb_ligne-1][nb_colone-1];		
+		if (ligne == 0 && colone == 0) nbCasesAdjPleines = tab[0][1] +	tab[1][0] +	tab[1][1] +	tab[0][nb_colone-1] + tab[1][nb_colone-1] +	tab[nb_ligne-1][0] + tab[nb_ligne-1][1] + tab[nb_ligne-1][nb_colone-1];		
 		else{
 			if (ligne == nb_ligne-1 && colone == 0)	nbCasesAdjPleines = tab[nb_ligne-1][1] + tab[nb_ligne-2][0] + tab[nb_ligne-2][1] + tab[nb_ligne-1][nb_colone-1] + tab[nb_ligne-2][nb_colone-1] + tab[0][0] + tab[0][1] + tab[0][nb_colone-1];											
 			else{

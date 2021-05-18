@@ -1,7 +1,7 @@
 EXEC = exe
 
 CC = gcc
-CFLAGS = -Wall -Wextra `sdl2-config --cflags`
+CFLAGS =`sdl2-config --cflags`
 LDFlags = `sdl2-config --libs` 
 
 #ensemble des .c
